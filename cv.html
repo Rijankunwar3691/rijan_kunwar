@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rijan Kunwar - Flutter Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Warm Neutral" - A calm and professional palette using beige, slate, and a subtle blue accent to create a focused and harmonious user experience. -->
+<!-- Application Structure Plan: A single-page application with a sticky top navigation bar for easy access to distinct sections: a professional summary, an interactive skills dashboard, a chronological experience timeline, and a project gallery with modals for detailed views. This structure is chosen to guide recruiters through a narrative of skills and accomplishments, allowing for both a quick overview and deep exploration, which is more engaging than a static document. -->
+    <!-- Visualization & Content Choices: 
+        - Skills: Report Info -> Technical Skills List. Goal -> Compare/Organize. Viz/Method -> Interactive Bar Chart (Chart.js) and filter buttons. Interaction -> User clicks a skill category (e.g., 'Languages') to dynamically update the bar chart, displaying only the relevant skills. Justification -> This transforms a static list into an engaging dashboard, demonstrating front-end capabilities and allowing recruiters to quickly assess specific skill sets.
+        - Experience: Report Info -> Professional Experience. Goal -> Show Change/Progression. Viz/Method -> Vertical Timeline (HTML/Tailwind). Interaction -> Hover effects on timeline items. Justification -> A timeline is an intuitive and visually appealing way to represent career progression, making the journey clearer than a simple text block.
+        - Projects: Report Info -> Project List. Goal -> Organize/Inform. Viz/Method -> Grid of cards with a modal system (HTML/Tailwind/JS). Interaction -> User clicks a 'Details' button on a project card to open a modal with more information. Justification -> This keeps the main layout clean while allowing users to explore projects in depth without leaving the page, improving user flow. 
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #334155;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #3B82F6;
+            border-bottom-color: #3B82F6;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .modal-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-slate-800">
+                <a href="#">Rijan Kunwar</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="nav-link pb-1">About</a>
+                <a href="#skills" class="nav-link pb-1">Skills</a>
+                <a href="#experience" class="nav-link pb-1">Experience</a>
+                <a href="#projects" class="nav-link pb-1">Projects</a>
+            </div>
+            <a href="mailto:rijan.kunwar3691@gmail.com" class="hidden md:block bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition-all">Contact Me</a>
+            <button id="mobile-menu-button" class="md:hidden text-slate-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#about" class="block text-center py-2 px-4 text-sm hover:bg-slate-100">About</a>
+            <a href="#skills" class="block text-center py-2 px-4 text-sm hover:bg-slate-100">Skills</a>
+            <a href="#experience" class="block text-center py-2 px-4 text-sm hover:bg-slate-100">Experience</a>
+            <a href="#projects" class="block text-center py-2 px-4 text-sm hover:bg-slate-100">Projects</a>
+            <a href="mailto:rijan.kunwar3691@gmail.com" class="block text-center py-3 px-4 bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-all">Contact Me</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-16">
+        
+        <section id="hero" class="text-center mb-16 md:mb-24">
+            <h1 class="text-4xl md:text-6xl font-bold text-slate-800 mb-4">Rijan Kunwar</h1>
+            <p class="text-xl md:text-2xl text-blue-600 font-semibold mb-6">Cross-Platform Application Developer</p>
+            <div class="flex justify-center space-x-6 text-slate-500">
+                <a href="https://www.linkedin.com/in/er-rijan-kunwar-a84aa8229/" target="_blank" class="hover:text-blue-600 transition-colors">LinkedIn</a>
+                <span>&bull;</span>
+                <a href="https://github.com/Rijankunwar3691" target="_blank" class="hover:text-blue-600 transition-colors">GitHub</a>
+                <span>&bull;</span>
+                <a href="mailto:rijan.kunwar3691@gmail.com" class="hover:text-blue-600 transition-colors">Email</a>
+            </div>
+        </section>
+
+        <section id="about" class="mb-16 md:mb-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-8 text-slate-800">About Me</h2>
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-md">
+                <p class="text-lg leading-relaxed text-slate-600">
+                    Results-driven Computer Engineer with over a year of dedicated experience in building, testing, and deploying high-performance, cross-platform applications using Flutter and Dart. Proficient in state management with Riverpod and Provider, database integration with Firebase and local storage solutions like Hive and Isar. Skilled in clean architecture (MVVM, MVC), API integration, and native SDK implementation via Method Channels. Proven ability to lead solo development cycles from concept to launch, delivering robust and user-centric mobile and desktop solutions.
+                </p>
+            </div>
+        </section>
+
+        <section id="skills" class="mb-16 md:mb-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4 text-slate-800">Technical Skills</h2>
+            <p class="text-center text-slate-500 mb-8 max-w-2xl mx-auto">This section provides an interactive overview of my technical abilities. Click on a category to see my proficiency in different technologies. This chart highlights my core competencies and the tools I use to build efficient and scalable applications.</p>
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+                <div id="skill-buttons" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+                </div>
+                <div class="chart-container">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="mb-16 md:mb-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4 text-slate-800">Professional Experience</h2>
+            <p class="text-center text-slate-500 mb-12 max-w-2xl mx-auto">Here is a timeline of my professional journey. This section details my roles, responsibilities, and key achievements, showcasing my growth and contributions in different work environments.</p>
+            <div class="relative max-w-3xl mx-auto">
+                <div class="absolute left-1/2 w-0.5 h-full bg-slate-200 -translate-x-1/2"></div>
+                <div id="experience-timeline" class="space-y-12">
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4 text-slate-800">Projects & Contributions</h2>
+            <p class="text-center text-slate-500 mb-12 max-w-2xl mx-auto">This gallery showcases a selection of my work, from full-fledged applications to open-source contributions. Each project represents a unique challenge and a learning opportunity. Click on a project to learn more about its features and the technologies used.</p>
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-slate-800 text-slate-400 mt-16 md:mt-24">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2024 Rijan Kunwar. All Rights Reserved.</p>
+            <p class="text-sm mt-2">Built with Tailwind CSS and Chart.js</p>
+        </div>
+    </footer>
+
+    <div id="project-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
+        <div class="modal-content bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95">
+            <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center">
+                <h3 id="modal-title" class="text-2xl font-bold text-slate-800"></h3>
+                <button id="modal-close-button" class="text-slate-500 hover:text-slate-800">&times;</button>
+            </div>
+            <div class="p-6">
+                <p id="modal-description" class="text-slate-600 mb-4 leading-relaxed"></p>
+                <h4 class="font-semibold text-slate-700 mb-2">Technologies Used:</h4>
+                <div id="modal-tech" class="flex flex-wrap gap-2 mb-4"></div>
+                <div id="modal-link-container"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const skillsData = {
+                'Languages': { 'Dart': 90, 'C++': 70, 'C#': 75, 'C': 65 },
+                'Frameworks & Platforms': { 'Flutter': 95, '.NET Core': 70, 'Android': 80, 'iOS': 75, 'Web': 80, 'Desktop': 85 },
+                'State Management': { 'Riverpod': 95, 'Provider': 85 },
+                'Databases': { 'Firebase': 90, 'SQLite': 85, 'Hive': 90, 'Isar': 88, 'PostgreSQL': 70 },
+                'Architecture': { 'Clean Arch.': 90, 'MVVM': 85, 'MVC': 80 },
+                'Tools & Services': { 'Git': 90, 'Firebase': 85, 'ML Kit': 80, 'Dio': 90 },
+                'API & Protocols': { 'REST': 95, 'JWT': 90, 'Method Channels': 85 }
+            };
+
+            const experienceData = [
+                {
+                    role: 'Flutter Developer',
+                    company: 'Aegis Software',
+                    period: 'Jan 2024 – Present',
+                    points: [
+                        'Led end-to-end development of cross-platform applications for mobile, desktop, and POS systems.',
+                        'Engineered and integrated a native Android payment SDK into a Flutter application using Method Channels.',
+                        'Developed and launched four major applications: Aegis OPS (ERP), Aegis Restro (POS), Aegis Pulse (Reporting), and Aegis Greetings (Check-in).',
+                        'Leveraged Google ML Kit for document scanning, improving the efficiency of the guest check-in process.'
+                    ]
+                },
+                {
+                    role: 'Mobile Application Developer',
+                    company: 'Ticket Sewa Pvt Ltd',
+                    period: 'Sep 2023 – Jan 2024',
+                    points: [
+                        'Developed key features for the organizer-facing mobile application using Flutter.',
+                        'Implemented robust state management using Riverpod and optimized local data persistence with Hive.',
+                        'Integrated secure JWT-based authentication and configured push notifications.'
+                    ]
+                }
+            ];
+
+            const projectsData = [
+                {
+                    title: 'Aegis OPS ERP App',
+                    shortDesc: 'A scalable ERP system with a modular architecture.',
+                    longDesc: 'Architected a scalable MonoRepo structure using Melos for modular package management, creating reusable components for authentication and UI. Integrated Dio with an interceptor for token-based authentication and managed application state with Riverpod.',
+                    tech: ['Flutter', 'Melos', 'Dio', 'Riverpod'],
+                    link: null
+                },
+                {
+                    title: 'Aegis Restro POS',
+                    shortDesc: 'A full-featured Point-of-Sale system for restaurants.',
+                    longDesc: 'Developed a full-featured POS system for restaurants using Flutter, Riverpod, and Hive. It includes core modules for menu management, order processing, and secure user authentication, with native SDK integration for card payments.',
+                    tech: ['Flutter', 'Riverpod', 'Hive', 'Native SDK'],
+                    link: null
+                },
+                {
+                    title: 'Gadgets Nepal E-commerce App',
+                    shortDesc: 'A complete e-commerce app with payment integration.',
+                    longDesc: 'Built a complete e-commerce application featuring product browsing, shopping cart, order history, and payment gateway integration with ESewa and RazorPay. Utilized Firebase for backend services, including authentication and database management.',
+                    tech: ['Flutter', 'Firebase', 'ESewa', 'RazorPay'],
+                    link: 'https://github.com/Rijankunwar3691/Gadgets-Nepal'
+                },
+                {
+                    title: 'Crop Safe - Leaf Disease Detection',
+                    shortDesc: 'A mobile app for plant disease identification using ML.',
+                    longDesc: 'Developed a mobile application that identifies plant diseases from images using a custom-trained CNN model deployed via a FastAPI backend.',
+                    tech: ['Flutter', 'CNN', 'FastAPI', 'Python'],
+                    link: 'https://github.com/Rijankunwar3691/Potato-and-Apple-Leaf-Disease-Detection'
+                },
+                 {
+                    title: 'advanced_searchable_dropdown',
+                    shortDesc: 'An open-source customizable dropdown widget for Flutter.',
+                    longDesc: 'Authored and published a highly customizable, searchable dropdown widget for Flutter on pub.dev. The package supports asynchronous data loading, rich UI customization, and has been adopted by other developers in the community.',
+                    tech: ['Flutter', 'Dart', 'Pub.dev'],
+                    link: 'https://pub.dev/packages/advanced_searchable_dropdown'
+                },
+                {
+                    title: 'Weather App',
+                    shortDesc: 'A real-time weather app with 7-day forecasts.',
+                    longDesc: 'A sleek weather application providing real-time weather updates and a 7-day forecast based on the user\'s current location or a searched city. Built with Flutter and integrated with a public weather API.',
+                    tech: ['Flutter', 'REST API', 'Geolocator'],
+                    link: 'https://github.com/Rijankunwar3691/mausam'
+                }
+            ];
+
+            const skillButtonsContainer = document.getElementById('skill-buttons');
+            const skillsChartCanvas = document.getElementById('skillsChart').getContext('2d');
+            let skillsChart;
+
+            function createOrUpdateChart(data) {
+                if (skillsChart) {
+                    skillsChart.destroy();
+                }
+                skillsChart = new Chart(skillsChartCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(data),
+                        datasets: [{
+                            label: 'Proficiency',
+                            data: Object.values(data),
+                            backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: {
+                                    display: false
+                                }
+                            },
+                             y: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.label}: ${context.raw}%`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            Object.keys(skillsData).forEach((category, index) => {
+                const button = document.createElement('button');
+                button.textContent = category;
+                button.className = 'skill-btn px-4 py-2 text-sm font-semibold rounded-full transition-colors';
+                if (index === 0) {
+                    button.classList.add('bg-blue-500', 'text-white');
+                } else {
+                    button.classList.add('bg-slate-200', 'text-slate-700', 'hover:bg-slate-300');
+                }
+                button.onclick = () => {
+                    document.querySelectorAll('.skill-btn').forEach(btn => {
+                        btn.classList.remove('bg-blue-500', 'text-white');
+                        btn.classList.add('bg-slate-200', 'text-slate-700', 'hover:bg-slate-300');
+                    });
+                    button.classList.add('bg-blue-500', 'text-white');
+                    button.classList.remove('bg-slate-200', 'text-slate-700', 'hover:bg-slate-300');
+                    createOrUpdateChart(skillsData[category]);
+                };
+                skillButtonsContainer.appendChild(button);
+            });
+
+            createOrUpdateChart(skillsData[Object.keys(skillsData)[0]]);
+
+            const timelineContainer = document.getElementById('experience-timeline');
+            experienceData.forEach((job, index) => {
+                const alignment = index % 2 === 0 ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8';
+                const order = index % 2 === 0 ? 'md:order-1' : 'md:order-2';
+                const markerPos = index % 2 === 0 ? 'md:right-0 md:translate-x-1/2' : 'md:left-0 md:-translate-x-1/2';
+                const item = `
+                    <div class="md:grid md:grid-cols-2 md:gap-8 items-start">
+                        <div class="md:col-start-${index % 2 === 0 ? 1 : 2} ${order} relative">
+                            <div class="absolute top-5 left-1/2 w-4 h-4 bg-blue-500 rounded-full -translate-x-1/2 ${markerPos}"></div>
+                            <div class="bg-white p-6 rounded-xl shadow-md mb-4 md:mb-0">
+                                <h3 class="text-xl font-bold text-slate-800">${job.role}</h3>
+                                <p class="text-blue-600 font-semibold mb-2">${job.company}</p>
+                                <p class="text-sm text-slate-500 mb-4">${job.period}</p>
+                                <ul class="space-y-2 text-left">
+                                    ${job.points.map(point => `<li class="flex items-start"><span class="text-blue-500 mr-2 mt-1">&#10003;</span><span class="text-slate-600">${point}</span></li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                timelineContainer.innerHTML += item;
+            });
+            
+            const projectsGrid = document.getElementById('projects-grid');
+            const modal = document.getElementById('project-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const modalTech = document.getElementById('modal-tech');
+            const modalLinkContainer = document.getElementById('modal-link-container');
+            const modalCloseButton = document.getElementById('modal-close-button');
+
+            projectsData.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 flex flex-col';
+                card.innerHTML = `
+                    <div class="p-6 flex-grow">
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">${project.title}</h3>
+                        <p class="text-slate-600 mb-4 flex-grow">${project.shortDesc}</p>
+                    </div>
+                    <div class="p-6 bg-slate-50">
+                        <button class="details-btn w-full text-blue-600 font-semibold hover:text-blue-800 transition-colors">View Details &rarr;</button>
+                    </div>
+                `;
+                projectsGrid.appendChild(card);
+
+                card.querySelector('.details-btn').addEventListener('click', () => {
+                    modalTitle.textContent = project.title;
+                    modalDescription.textContent = project.longDesc;
+                    
+                    modalTech.innerHTML = '';
+                    project.tech.forEach(techItem => {
+                        const techPill = document.createElement('span');
+                        techPill.className = 'bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full';
+                        techPill.textContent = techItem;
+                        modalTech.appendChild(techPill);
+                    });
+
+                    modalLinkContainer.innerHTML = '';
+                    if (project.link) {
+                        const link = document.createElement('a');
+                        link.href = project.link;
+                        link.target = '_blank';
+                        link.className = 'inline-block mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition-all';
+                        link.textContent = project.title.includes('dropdown') ? 'View on Pub.dev' : 'View on GitHub';
+                        modalLinkContainer.appendChild(link);
+                    }
+
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    modal.querySelector('.modal-content').classList.remove('scale-95');
+                });
+            });
+
+            const closeModal = () => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modal.querySelector('.modal-content').classList.add('scale-95');
+            };
+
+            modalCloseButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('#mobile-menu a, nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    if(this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        document.querySelector(this.getAttribute('href')).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        if (mobileMenu.classList.contains('hidden') === false) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
